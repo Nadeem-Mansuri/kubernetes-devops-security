@@ -38,5 +38,10 @@ pipeline {
               } 
           }
       }
+      stage('Deploying numeric-app incremental apps in Kubernetes - DEV') {
+        steps {
+              withKubeConfig([credentialsId: 'kubeconfig']) {
+                sh 'kubectl create deploy node-app --image siddharth67/node-service:v1'
+                sh 'kubectl -n default expose deploy node-app --name node-service --port 5000'
   }
 }
