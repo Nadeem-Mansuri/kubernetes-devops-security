@@ -50,6 +50,12 @@ pipeline {
               } 
           }
       }
+
+      stage ('Run SonarQube Container') {
+        steps {
+          sh 'docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest'
+        }
+      }
     //  stage('Deploying numeric-app incremental apps in Kubernetes - DEV') {
     //    steps {
     //          withKubeConfig([credentialsId: 'kubeconfig']) {
