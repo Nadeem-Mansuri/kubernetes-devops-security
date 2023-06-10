@@ -32,6 +32,11 @@ pipeline {
           }
       }
     
+      stage('SonarQube - SAST') {
+        steps {
+          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.projectName='numeric-application' -Dsonar.host.url=http://devsecops.example.local:9000 -Dsonar.token=sqp_c1ac73c778f852442adccafad5938f8e4a6f6688'
+        }
+      }
 
       stage('Docker Build and Push') {
         steps {
@@ -51,11 +56,6 @@ pipeline {
           }
       }
 
-      stage ('Run SonarQube Container') {
-        steps {
-          sh 'docker run -d --name sonarqube -e SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true -p 9000:9000 sonarqube:latest'
-        }
-      }
     //  stage('Deploying numeric-app incremental apps in Kubernetes - DEV') {
     //    steps {
     //          withKubeConfig([credentialsId: 'kubeconfig']) {
