@@ -34,7 +34,7 @@ pipeline {
     
       stage('SonarQube - SAST') {
         steps {
-          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=numeric-application -Dsonar.projectName=numeric-application -Dsonar.host.url=http://devsecops.example.local:9000 -Dsonar.token=sqp_c1ac73c778f852442adccafad5938f8e4a6f6688'
+          sh 'mvn clean verify sonar:sonar -Dsonar.projectKey=mumeric-application -Dsonar.projectName='mumeric-application' -Dsonar.host.url=http://devsecops.example.local:9000 -Dsonar.token=sqp_9712f736dbf4302a808120ec74635245cfbdd141'
         }
       }
 
@@ -61,6 +61,7 @@ pipeline {
     //          withKubeConfig([credentialsId: 'kubeconfig']) {
     //            sh 'kubectl create deploy node-app --image siddharth67/node-service:v1'
     //            sh 'kubectl -n default expose deploy node-app --name node-service --port 5000'
+    //kubectl  expose po nginx-pod --port 80 --type NodePort
     //          }
     //    }
     //  }    
