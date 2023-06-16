@@ -39,7 +39,6 @@ pipeline {
         }
       } 
 
-
       stage('Docker Build and Push') {
         steps {
           withDockerRegistry([credentialsId: "docker-hub", url: ""]) {
@@ -49,14 +48,15 @@ pipeline {
           }
         }
       }
-      // stage('Kubernetes Deployment - DEV') {
-      //   steps {
-      //         withKubeConfig([credentialsId: 'kubeconfig']) {
-      //           sh "sed -i 's#replace#ndmkhan068/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
-      //           sh "kubectl apply -f k8s_deployment_service.yaml"
-      //         } 
-      //     }
-      // }
+
+      stage('Kubernetes Deployment - DEV') {
+        steps {
+              withKubeConfig([credentialsId: 'kubeconfig']) {
+                sh "sed -i 's#replace#ndmkhan068/numeric-app:${GIT_COMMIT}#g' k8s_deployment_service.yaml"
+                sh "kubectl apply -f k8s_deployment_service.yaml"
+              } 
+          }
+      }
  
     //=======================================================================
     //  stage('Deploying numeric-app incremental apps in Kubernetes - DEV') {
