@@ -5,6 +5,7 @@ pipeline {
       stage('Build Artifact') {
             steps {
               sh "mvn clean package -DskipTests=true"
+              sh "echo Welcome"
               archive 'target/*.jar'
             }
         }  
