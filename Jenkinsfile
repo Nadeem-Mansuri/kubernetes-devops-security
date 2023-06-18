@@ -14,24 +14,13 @@ pipeline {
         steps {
           sh "mvn test"
         }
-        // post {
-        //   always {
-        //     junit 'target/surefire-reports/*.xml'
-        //     jacoco execPattern: 'target/jacoco.exec'
-        //   }
-        // }
       }
 
       stage('Mutation Tests - PIT') {
         steps {
           sh "mvn org.pitest:pitest-maven:mutationCoverage"
       }
-      // post {
-      //   always {
-      //     pitmutation mutationStatsFile: '**/target/pit-reports/**/mutations.xml'
-      //       }
-      //     }
-      }
+    }
     
       stage('SonarQube - SAST') {
         steps {
@@ -50,11 +39,6 @@ pipeline {
         steps {
           sh "mvn dependency-check:check"
         }
-        // post {
-        //   always {
-        //     dependencyCheckPublisher pattern: 'target/dependency-check-report.xml'
-        //   }
-        // }
       }
 
       stage('Docker Build and Push') {
@@ -75,6 +59,7 @@ pipeline {
               } 
           }
       }
+  }
 
       post {
         always {
@@ -85,17 +70,4 @@ pipeline {
 
         }
       }
- 
-    //=======================================================================
-    //  stage('Deploying numeric-app incremental apps in Kubernetes - DEV') {
-    //    steps {
-    //          withKubeConfig([credentialsId: 'kubeconfig']) {
-    //            sh 'kubectl create deploy node-app --image siddharth67/node-service:v1'
-    //            sh 'kubectl -n default expose deploy node-app --name node-service --port 5000'
-    //kubectl  expose po nginx-pod --port 80 --type NodePort
-    //          }
-    //    }
-    //  }    
-    //========================================================================
-  }
 }
